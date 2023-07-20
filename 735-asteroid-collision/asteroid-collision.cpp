@@ -1,5 +1,6 @@
 class Solution {
 public:
+//yt ---->>>>>>>>(codestorywithMIK)
     vector<int> asteroidCollision(vector<int>& asteroids) {
         vector<int>st;
         for(int &a:asteroids){
