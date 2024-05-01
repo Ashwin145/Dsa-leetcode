@@ -1,18 +1,20 @@
+//boyer moore majority vote algorithm
 class Solution {
     public int majorityElement(int[] nums) {
-        int cand=0;
-        int count = 0;
-        for(int i=0;i<nums.length;i++){
-            if(count==0){
-                cand = nums[i]; 
-            }if(cand == nums[i]){
-                count++;
+        int winner = nums[0],lead = 1;
+        for(int i=1;i<nums.length;i++){
+            if(nums[i]==winner){
+                lead++;
+            }else if(lead>0){
+                lead--;
             }else{
-                count--;
+                winner = nums[i];
+                lead=1;
             }
-
         }
-        return cand;
+        return winner;
+
         
     }
 }
+//lect -6(Part-3)
