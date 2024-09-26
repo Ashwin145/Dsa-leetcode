@@ -1,47 +1,45 @@
 class Solution {
     public int largestRectangleArea(int[] heights) {
         int maxArea = 0;
-        int nsl[] = new int[heights.length];
-        int nsr[] = new int[heights.length];
+        int[] nsl = new int[heights.length]; // Next Smaller Left
+        int[] nsr = new int[heights.length]; // Next Smaller Right
         
-        //Next Smaller right
-        Stack<Integer>s = new Stack<>();
-        for(int i=heights.length-1;i>=0;i--){
-            while(!s.isEmpty() && heights[s.peek()]>=heights[i]){
+        // Stack for calculating Next Smaller Right
+        Stack<Integer> s = new Stack<>();
+        for (int i = heights.length - 1; i >= 0; i--) {
+            while (!s.isEmpty() && heights[s.peek()] >= heights[i]) {
                 s.pop();
             }
-            if(s.isEmpty()){
-                nsr[i] = heights.length;
-            }else{
-                nsr[i] = s.peek();
+            if (s.isEmpty()) {
+                nsr[i] = heights.length; // If no smaller element on right, set to heights.length
+            } else {
+                nsr[i] = s.peek(); // Otherwise, next smaller element to the right
             }
-            s.push(i);
+            s.push(i); // Push current index onto the stack
         }
-        //Next Smaller left
+        
+        // Stack for calculating Next Smaller Left
         s = new Stack<>();
-        for(int i=0;i<heights.length;i++){
-            while(!s.isEmpty() && heights[s.peek()]>=heights[i]){
+        for (int i = 0; i < heights.length; i++) {
+            while (!s.isEmpty() && heights[s.peek()] >= heights[i]) {
                 s.pop();
             }
-            if(s.isEmpty()){
-                nsl[i] = -1;
-            }else{
-                nsl[i] = s.peek();
+            if (s.isEmpty()) {
+                nsl[i] = -1; // If no smaller element on left, set to -1
+            } else {
+                nsl[i] = s.peek(); // Otherwise, next smaller element to the left
             }
-            s.push(i);
+            s.push(i); // Push current index onto the stack
         }
-        //Max Area
-        for(int i=0;i<heights.length;i++){
-            int height = heights[i];
-            int width = nsr[i]-nsl[i]-1;
-            int currArea = height*width;
-            maxArea = Math.max(currArea,maxArea);
-             
-        }
-        //System.out.println(maxArea);
-        return maxArea;
-
         
+        // Calculate max area
+        for (int i = 0; i < heights.length; i++) {
+            int height = heights[i];
+            int width = nsr[i] - nsl[i] - 1; // Calculate width of the rectangle
+            int currArea = height * width;
+            maxArea = Math.max(currArea, maxArea); // Update maxArea
+        }
+        
+        return maxArea; // Return the largest area
     }
-    
 }
