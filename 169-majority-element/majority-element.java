@@ -1,20 +1,17 @@
-//boyer moore majority vote algorithm
 class Solution {
     public int majorityElement(int[] nums) {
-        int winner = nums[0],lead = 1;
-        for(int i=1;i<nums.length;i++){
-            if(nums[i]==winner){
-                lead++;
-            }else if(lead>0){
-                lead--;
-            }else{
-                winner = nums[i];
-                lead=1;
-            }
+        HashMap<Integer,Integer>map = new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            map.put(nums[i],map.getOrDefault(nums[i],0)+1);
         }
-        return winner;
+
+        for(Integer key:map.keySet()){
+            if(map.get(key)>nums.length/2)
+            return key;
+        }
+        return -1;
 
         
     }
+    
 }
-//lect -6(Part-3)
